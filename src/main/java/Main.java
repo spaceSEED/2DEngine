@@ -5,6 +5,7 @@ public class Main {
     static int BGL=5;
     static int FGL=3;
     static int scenes=1;
+    static String assetPath="assets\\";
 
 
     public static Sprite spriteSheet[][];//grid of sprites
@@ -33,6 +34,7 @@ public class Main {
                 levels[i].setFGLayer(j,new Layer(/*filepath?*/));
             }
         }
+        levels[0].setBGLayer(0,new Layer(assetPath+"foxtrot.jpg"));//test
 
 
 

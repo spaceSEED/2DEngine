@@ -4,7 +4,7 @@ public class Display {
 
         public static JFrame frame;
         //public static JPanel panel;
-        Graphics2D graphics;
+        Graphics graphics;
         int viewBounds[];//top-left (x,y); bottom-right (x,y)
         int wid, hei;
 
@@ -26,7 +26,7 @@ public class Display {
 
             load(0);
             frame.setVisible(true);
-            graphics = (Graphics2D) frame.getGraphics();
+            graphics =frame.getGraphics();
         }
 
         public void load(int scene){
@@ -45,10 +45,10 @@ public class Display {
         public void sequentialParse(){//Update by sequentially updating each pixel; slowest method
             for(int x=0;x<wid;x++){
                 for(int y=0;y<hei;y++){
-                    int r=0,g=0,b=0,a=0;//todo use the 'alpha' value properly
+                    int r=-1,g=-1,b=-1,a=-1;//todo use the 'alpha' value properly
                     for(int i=0;i<Main.FGL;i++){
                         int rgba[]=Main.ForegroundLayers[i].getRGBA(x,y);
-                        if(rgba[0]!=0||rgba[1]!=0||rgba[2]!=0||rgba[3]!=0){
+                        if(rgba[0]!=-1||rgba[3]!=0){
                             r=rgba[0];
                             g=rgba[1];
                             b=rgba[2];
@@ -68,13 +68,16 @@ public class Display {
                     if(r==0&&g==0&&b==0&&a==0) {
                         for (int i = 0; i < Main.BGL; i++) {
                             int rgba[] = Main.BackgroundLayers[i].getRGBA(x, y);
-                            if (rgba[0] != 0 || rgba[1] != 0 || rgba[2] != 0 || rgba[3] != 0) {
+                            if (rgba[0]!=-1|| rgba[3] != 0) {
                                 r = rgba[0];
                                 g = rgba[1];
                                 b = rgba[2];
                                 a = rgba[3];
                             }
                         }
+                    }
+                    if(r==-1){
+                        r=0;g=0;b=0;a=0;
                     }
                     graphics.setColor(new Color(r,g,b,a));
                     graphics.fillRect(x,y,1,1);

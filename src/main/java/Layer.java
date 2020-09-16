@@ -1,4 +1,4 @@
-import javax.imageio.ImageIO;
+import javax.imageio.*;
 import javax.imageio.stream.FileImageInputStream;
 import java.io.*;
 import java.awt.*;
@@ -18,8 +18,8 @@ public class Layer {
     public Layer(String filepath) {
         try {
             art= ImageIO.read(new File(filepath));
-        }catch(Exception e){
-            System.out.print(e.getMessage());
+        }catch(IOException e){
+            e.printStackTrace();
         }
     }
 
@@ -46,7 +46,13 @@ public class Layer {
         scroll_v=a;
     }
     public int[] getRGBA(int x, int y){
-        return art.getRGB(x,y,1,1,null,0,0);
+        int rgbArray[]=new int[4];
+        if(art==null){
+            rgbArray[0]=-1;
+        }else {
+            art.getRGB(x, y, 1, 1, rgbArray, 0, 1);
+        }
+        return rgbArray;
     }
 
 
