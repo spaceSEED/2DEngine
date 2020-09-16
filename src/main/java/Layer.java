@@ -45,14 +45,15 @@ public class Layer {
     public void setScroll(double a){
         scroll_v=a;
     }
-    public int[] getRGBA(int x, int y){
-        int rgbArray[]=new int[4];
-        if(art==null){
-            rgbArray[0]=-1;
+
+    public int getRGBA(int x, int y){//return -1 in first position if pixel doesn't exist
+        int rgba=0;
+        if(art==null||y>=art.getHeight()||x>=art.getWidth()){
+            rgba=0;
         }else {
-            art.getRGB(x, y, 1, 1, rgbArray, 0, 1);
+            rgba=art.getRGB(x, y);
         }
-        return rgbArray;
+        return rgba;
     }
 
 

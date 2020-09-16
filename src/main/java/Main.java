@@ -35,6 +35,7 @@ public class Main {
             }
         }
         levels[0].setBGLayer(0,new Layer(assetPath+"foxtrot.jpg"));//test
+        levels[0].setFGLayer(0,new Layer(assetPath+"strawberry.jpg"));//test
 
 
 

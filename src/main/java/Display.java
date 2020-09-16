@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.ImageObserver;
+
 public class Display {
 
         public static JFrame frame;
@@ -26,7 +28,7 @@ public class Display {
 
             load(0);
             frame.setVisible(true);
-            graphics =frame.getGraphics();
+            graphics = frame.getGraphics();
         }
 
         public void load(int scene){
@@ -39,20 +41,21 @@ public class Display {
 
         public void update(){
             sequentialParse();//todo replace with better method
+            //imageDraw();
+
+
             frame.update(graphics);
         }
 
         public void sequentialParse(){//Update by sequentially updating each pixel; slowest method
             for(int x=0;x<wid;x++){
                 for(int y=0;y<hei;y++){
-                    int r=-1,g=-1,b=-1,a=-1;//todo use the 'alpha' value properly
-                    for(int i=0;i<Main.FGL;i++){
-                        int rgba[]=Main.ForegroundLayers[i].getRGBA(x,y);
-                        if(rgba[0]!=-1||rgba[3]!=0){
-                            r=rgba[0];
-                            g=rgba[1];
-                            b=rgba[2];
-                            a=rgba[3];
+                    Color curColor=new Color(0,0,0,0);
+                    int rgba=0;//todo use the 'alpha' value properly
+                    for(int i=Main.FGL-1;i>=0;i--){
+                        int rgbat=Main.ForegroundLayers[i].getRGBA(x,y);
+                        if(rgbat<0){//||rgba[3]!=0){
+                            rgba=rgbat;
                         }
                     }
                     //todo check for sprite + color
@@ -65,22 +68,33 @@ public class Display {
                                 a = rgba[3];
                             }
                     }*/
-                    if(r==0&&g==0&&b==0&&a==0) {
-                        for (int i = 0; i < Main.BGL; i++) {
-                            int rgba[] = Main.BackgroundLayers[i].getRGBA(x, y);
-                            if (rgba[0]!=-1|| rgba[3] != 0) {
-                                r = rgba[0];
-                                g = rgba[1];
-                                b = rgba[2];
-                                a = rgba[3];
+                    if(rgba==0) {
+                        for (int i = Main.BGL-1; i >=0 ; i--) {
+                            int rgbat = Main.BackgroundLayers[i].getRGBA(x, y);
+                            if (rgbat<0) {
+                                rgba=rgbat;
                             }
                         }
                     }
-                    if(r==-1){
-                        r=0;g=0;b=0;a=0;
+                    if(rgba!=0) {
+                        curColor = new Color(rgba);
                     }
-                    graphics.setColor(new Color(r,g,b,a));
+                    graphics.setColor(curColor);
                     graphics.fillRect(x,y,1,1);
+                }
+            }
+        }
+
+        public void imageDraw(){//uses image draw methods
+            for(int i=0;i<Main.BGL;i++){
+                if(Main.BackgroundLayers[i].art!=null) {
+                    graphics.drawImage(Main.BackgroundLayers[i].art, 0, 0, null);
+                }
+            }
+            //todo handle sprites
+            for(int i=0;i<Main.FGL;i++){
+                if(Main.ForegroundLayers[i].art!=null) {
+                    graphics.drawImage(Main.ForegroundLayers[i].art, 0, 0, null);
                 }
             }
         }

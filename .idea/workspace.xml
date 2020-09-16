@@ -106,45 +106,52 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="254" y="88" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1600.860@0.0.1600.860" timestamp="1600273137155" />
+    <state x="605" y="139" key="#com.intellij.ide.util.MemberChooser" timestamp="1600290536237">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="605" y="139" key="#com.intellij.ide.util.MemberChooser/0.0.1600.860@0.0.1600.860" timestamp="1600290536237" />
     <state x="580" y="188" key="FileChooserDialogImpl" timestamp="1600286440765">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="580" y="188" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1600286440765" />
-    <state width="1557" height="222" key="GridCell.Tab.0.bottom" timestamp="1600290191298">
+    <state width="1557" height="222" key="GridCell.Tab.0.bottom" timestamp="1600292916471">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="222" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1600290191298" />
-    <state width="1557" height="222" key="GridCell.Tab.0.center" timestamp="1600290191297">
+    <state width="1557" height="222" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1600292916471" />
+    <state width="1557" height="222" key="GridCell.Tab.0.center" timestamp="1600292916471">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="222" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1600290191297" />
-    <state width="1557" height="222" key="GridCell.Tab.0.left" timestamp="1600290191297">
+    <state width="1557" height="222" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1600292916471" />
+    <state width="1557" height="222" key="GridCell.Tab.0.left" timestamp="1600292916471">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="222" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1600290191297" />
-    <state width="1557" height="222" key="GridCell.Tab.0.right" timestamp="1600290191298">
+    <state width="1557" height="222" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1600292916471" />
+    <state width="1557" height="222" key="GridCell.Tab.0.right" timestamp="1600292916471">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="222" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1600290191298" />
-    <state width="1557" height="276" key="GridCell.Tab.1.bottom" timestamp="1600289430926">
+    <state width="1557" height="222" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1600292916471" />
+    <state width="1557" height="276" key="GridCell.Tab.1.bottom" timestamp="1600292691288">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="276" key="GridCell.Tab.1.bottom/0.0.1600.860@0.0.1600.860" timestamp="1600289430926" />
-    <state width="1557" height="276" key="GridCell.Tab.1.center" timestamp="1600289430926">
+    <state width="1557" height="276" key="GridCell.Tab.1.bottom/0.0.1600.860@0.0.1600.860" timestamp="1600292691288" />
+    <state width="1557" height="276" key="GridCell.Tab.1.center" timestamp="1600292691287">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="276" key="GridCell.Tab.1.center/0.0.1600.860@0.0.1600.860" timestamp="1600289430926" />
-    <state width="1557" height="276" key="GridCell.Tab.1.left" timestamp="1600289430926">
+    <state width="1557" height="276" key="GridCell.Tab.1.center/0.0.1600.860@0.0.1600.860" timestamp="1600292691287" />
+    <state width="1557" height="276" key="GridCell.Tab.1.left" timestamp="1600292691287">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="276" key="GridCell.Tab.1.left/0.0.1600.860@0.0.1600.860" timestamp="1600289430926" />
-    <state width="1557" height="276" key="GridCell.Tab.1.right" timestamp="1600289430926">
+    <state width="1557" height="276" key="GridCell.Tab.1.left/0.0.1600.860@0.0.1600.860" timestamp="1600292691287" />
+    <state width="1557" height="276" key="GridCell.Tab.1.right" timestamp="1600292691288">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="276" key="GridCell.Tab.1.right/0.0.1600.860@0.0.1600.860" timestamp="1600289430926" />
+    <state width="1557" height="276" key="GridCell.Tab.1.right/0.0.1600.860@0.0.1600.860" timestamp="1600292691288" />
     <state x="456" y="195" key="run.anything.popup" timestamp="1600275191787">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="456" y="195" key="run.anything.popup/0.0.1600.860@0.0.1600.860" timestamp="1600275191787" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/2DEngine$Main.ic" NAME="Main Coverage Results" MODIFIED="1600291869942" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
