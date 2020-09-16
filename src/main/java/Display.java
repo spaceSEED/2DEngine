@@ -19,7 +19,8 @@ public class Display {
             //frame.getContentPane().add(panel);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-            viewBounds[0]=0;viewBounds[1]=0;viewBounds[2]=wid;viewBounds[3]=hei;
+            viewBounds[0]=Main.pos[0];viewBounds[1]=Main.pos[1];
+            viewBounds[2]=Main.pos[0]+wid;viewBounds[3]=Main.pos[1]+hei;
 
             frame.setBounds(0,0,wid,hei);
             frame.setFocusable(true);
@@ -42,7 +43,6 @@ public class Display {
         public void update(){
             sequentialParse();//todo replace with better method
             //imageDraw();
-
 
             frame.update(graphics);
         }
@@ -97,5 +97,14 @@ public class Display {
                     graphics.drawImage(Main.ForegroundLayers[i].art, 0, 0, null);
                 }
             }
+        }
+
+        public void scroll(int x, int y){
+            viewBounds[0]+=x;
+            viewBounds[1]+=y;
+            viewBounds[2]+=x;
+            viewBounds[3]+=y;
+            //todo handle layer scrolling (parallax)
+            graphics=graphics.create(-x,-y,wid,hei);
         }
 }

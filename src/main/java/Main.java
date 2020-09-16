@@ -8,11 +8,13 @@ public class Main {
     static String assetPath="assets\\";
 
 
+
     public static Sprite spriteSheet[][];//grid of sprites
     public static Layer BackgroundLayers[];//0 is top layer
     public static Layer ForegroundLayers[];//0 is top layer
     public static Scene levels[];
     public static int pos[];//top left window corner position
+    static Display window;
 
     public static void main(String[] args){
         pos=new int[2];
@@ -39,7 +41,7 @@ public class Main {
 
 
 
-        Display window=new Display(640,480);
+        window=new Display(640,480);
 
 
 
@@ -55,7 +57,9 @@ public class Main {
 
         }
         if(Input.checkPushFlag!=-1){//action if a given key is pushed (use KeyEvent.VK_?)
-
+            if(Input.checkPushFlag==KeyEvent.VK_RIGHT){
+                window.scroll(10,0);
+            }
         }
         if(Input.checkRelFlag!=-1){//action if a given key is released (use KeyEvent.VK_?)
 
