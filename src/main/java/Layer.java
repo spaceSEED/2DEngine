@@ -1,19 +1,28 @@
+import javax.imageio.ImageIO;
+import javax.imageio.stream.FileImageInputStream;
+import java.io.*;
 import java.awt.*;
+import java.awt.image.*;
 
 public class Layer {
     public boolean isStatic=true;//set ability to scroll/image image scaling
-    public Image art;
+    public BufferedImage art;
     public double scroll_v=0.0;//scroll velocity relative to the screen
 
     public Layer(){
 
     }
-    public Layer(Image a){
+    public Layer(BufferedImage a){
         art=a;
     }
-    public Layer(String s){
-
+    public Layer(String filepath) {
+        try {
+            art= ImageIO.read(new File(filepath));
+        }catch(Exception e){
+            System.out.print(e.getMessage());
+        }
     }
+
 
     public void setStatic(boolean a){
         isStatic=a;
@@ -22,15 +31,22 @@ public class Layer {
         return isStatic;
     }
 
-    public void setImage(Image a){
+    public void setImage(BufferedImage a){
         art=a;
     }
+    public void setImageFromFile(String filepath){
+        try {
+            art= ImageIO.read(new File(filepath));
+        }catch(Exception e){
+            System.out.print(e.getMessage());
+        }
+    }
+
     public void setScroll(double a){
         scroll_v=a;
     }
     public int[] getRGBA(int x, int y){
-        //TODO get RGBA from image
-        return new int[4];
+        return art.getRGB(x,y,1,1,null,0,0);
     }
 
 
