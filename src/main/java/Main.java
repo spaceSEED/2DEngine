@@ -42,29 +42,28 @@ public class Main {
 
 
         window=new Display(640,480);
-
-
-
+        //Thread disp = new Thread(window);
+        //disp.start();
 
         while(true){
-            run();
             window.update();
+            run();
         }
     }
+
 
     public static void run(){//gamelogic here
         if(Input.checkHitFlag!=-1){//action if a given key is hit (use KeyEvent.VK_?)
 
         }
         if(Input.checkPushFlag!=-1){//action if a given key is pushed (use KeyEvent.VK_?)
-            if(Input.checkPushFlag==KeyEvent.VK_RIGHT){
+            if(Input.checkPushFlag==KeyEvent.VK_RIGHT){//movement example
                 window.scroll(10,0);
             }
         }
         if(Input.checkRelFlag!=-1){//action if a given key is released (use KeyEvent.VK_?)
 
         }
-
 
 
         Input.checkPushFlag=-1;

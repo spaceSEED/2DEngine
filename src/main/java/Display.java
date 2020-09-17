@@ -1,16 +1,19 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.ImageObserver;
+import java.awt.image.*;
 
-public class Display {
+public class Display /*implements Runnable*/{
 
         public static JFrame frame;
         //public static JPanel panel;
         Graphics graphics;
+        BufferedImage graphicsBuffer;//to prevent flickering
+        Graphics2D gBg;//used to draw to the graphics buffer
         int viewBounds[];//top-left (x,y); bottom-right (x,y)
         int wid, hei;
 
         public Display(int wid, int hei){
+            load(0);
             this.wid=wid;
             this.hei=hei;
             viewBounds=new int[4];
@@ -27,9 +30,11 @@ public class Display {
             frame.requestFocusInWindow();
             frame.addKeyListener(new Input());
 
-            load(0);
+
             frame.setVisible(true);
             graphics = frame.getGraphics();
+            graphicsBuffer=new BufferedImage(frame.getWidth(),frame.getHeight(),BufferedImage.TYPE_INT_ARGB);
+            gBg=graphicsBuffer.createGraphics();
         }
 
         public void load(int scene){
@@ -39,12 +44,18 @@ public class Display {
             Main.spriteSheet=cur.getSpriteSheet();
 
         }
-
-        public void update(){
-            sequentialParse();//todo replace with better method
-            //imageDraw();
-
-            frame.update(graphics);
+//static int cnt=0;
+        public void update(){//was run()
+            //while(true) {
+                sequentialParse();//todo replace with better method
+                //imageDraw();
+                try {
+                    //wait(2);
+                } catch (Exception e) {
+                }
+                graphics.drawImage(graphicsBuffer,0,0,null);
+                //cnt++;
+            //}
         }
 
         public void sequentialParse(){//Update by sequentially updating each pixel; slowest method
@@ -79,8 +90,10 @@ public class Display {
                     if(rgba!=0) {
                         curColor = new Color(rgba);
                     }
-                    graphics.setColor(curColor);
-                    graphics.fillRect(x,y,1,1);
+                    //graphics.setColor(curColor);
+                    gBg.setColor(curColor);
+                    //graphics.fillRect(x,y,1,1);
+                    gBg.fillRect(x,y,1,1);
                 }
             }
         }
@@ -88,13 +101,15 @@ public class Display {
         public void imageDraw(){//uses image draw methods
             for(int i=0;i<Main.BGL;i++){
                 if(Main.BackgroundLayers[i].art!=null) {
-                    graphics.drawImage(Main.BackgroundLayers[i].art, 0, 0, null);
+                    //graphics.drawImage(Main.BackgroundLayers[i].art, 0, 0, null);
+                    gBg.drawImage(Main.BackgroundLayers[i].art,null,0,0);
                 }
             }
             //todo handle sprites
             for(int i=0;i<Main.FGL;i++){
                 if(Main.ForegroundLayers[i].art!=null) {
-                    graphics.drawImage(Main.ForegroundLayers[i].art, 0, 0, null);
+                    //graphics.drawImage(Main.ForegroundLayers[i].art, 0, 0, null);
+                    gBg.drawImage(Main.ForegroundLayers[i].art,null,0,0);
                 }
             }
         }
