@@ -38,10 +38,35 @@ public class Sprite {//todo
         }
     }
 
+    public void moveSpriteBy(int x, int y){
+        startx+=x;
+        starty+=y;
+        endx+=x;
+        endy+=y;
+    }
+    public void moveSpriteTo(int x, int y){
+        int w=endx-startx;
+        int h=endy-starty;
+        startx=x;
+        starty=y;
+        endx=x+w;
+        endy=y+h;
+    }
+    public void resizeSprite(int sx, int sy, int ex, int ey){
+        startx=sx;
+        starty=sy;
+        endy=ey;
+        endx=ex;
+    }
+    public void resizeSprite(int wid, int hei){
+        endx=startx+wid;
+        endy=starty+hei;
+    }
+
     private BufferedImage adjustImage(BufferedImage im){
         BufferedImage bi=new BufferedImage((endx-startx),(endy-starty),BufferedImage.TYPE_INT_ARGB);
         Graphics2D tempG=bi.createGraphics();
-        tempG.drawImage(spriteImage, null, 0, 0);
+        tempG.drawImage(spriteImage, null, 0, 0);//todo readjust image size to fit
         return bi;
     }
 

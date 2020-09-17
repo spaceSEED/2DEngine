@@ -46,4 +46,52 @@ public class Scene {
     public Sprite[] getSprites(){
         return spriteList;
     }
+
+    public boolean checkSpriteCollision(int i, int j){//check 2 sprites against each other
+        Sprite cur=spriteList[i];
+        Sprite t = spriteList[j];
+        if(t!=null&&cur!=null&&inside(cur.startx,cur.starty,cur.endx,cur.endy,t.startx,t.starty,t.endx,t.endy)){
+            return true;
+        }
+        return false;
+
+    }
+    public boolean checkSpriteCollision(int i){//use location of sprite in list (1 vs all)
+        Sprite cur=spriteList[i];
+        for(int j=0;j<spriteList.length;j++){
+            if(j!=i) {
+                Sprite t = spriteList[j];
+                if(t!=null&&cur!=null&&inside(cur.startx,cur.starty,cur.endx,cur.endy,t.startx,t.starty,t.endx,t.endy)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public boolean checkSpriteCollision(){//use if needed. this is O(n^2), the others are faster and more focused
+        for(int i=0;i<spriteList.length;i++){
+            Sprite cur=spriteList[i];
+            for(int j=0;j<spriteList.length;j++){
+                if(j!=i) {
+                    Sprite t = spriteList[j];
+                    if(t!=null&&cur!=null&&inside(cur.startx,cur.starty,cur.endx,cur.endy,t.startx,t.starty,t.endx,t.endy)){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    private boolean inside(int sx1, int sy1, int ex1, int ey1, int sx2, int sy2, int ex2, int ey2){
+        if(sx2>=sx1&&sx2<=ex1&&sy2>=sy1&&sy2<=ey1){
+            return true;
+        }else if(ex2>=sx1&&ex2<=ex1&&ey2>=sy1&&ey2<=ey1) {
+            return true;
+        }else if(sx2>=sx1&&sx2<=ex1&&ey2>=sy1&&ey2<=ey1) {
+            return true;
+        }else if(ex2>=sx1&&ex2<=ex1&&sy2>=sy1&&sy2<=ey1) {
+            return true;
+        }
+        return false;
+    }
 }
