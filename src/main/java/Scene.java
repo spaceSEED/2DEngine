@@ -1,12 +1,16 @@
+import com.sun.istack.internal.Nullable;
+
+import java.awt.image.BufferedImage;
+
 public class Scene {
     Layer BackgroundLayers[];//0 is top layer
     Layer ForegroundLayers[];//0 is top layer
-    Sprite spriteSheet[][];
+    Sprite spriteList[];
 
-    public Scene(int bgl, int fgl, int gridw, int gridh){
+    public Scene(int bgl, int fgl, int spriteN){
         BackgroundLayers = new Layer[bgl];
         ForegroundLayers = new Layer[fgl];
-        spriteSheet = new Sprite[gridw][gridh];
+        spriteList = new Sprite[spriteN];
 
     }
 
@@ -24,11 +28,22 @@ public class Scene {
         return ForegroundLayers;
     }
 
-    public void setSprite(int x, int y, Sprite s){
-        spriteSheet[x][y]=s;
+    public void setSprite(int i, Sprite s){
+        if(i<spriteList.length&&i>=0){
+            spriteList[i]=s;
+        }
+    }
+    public void setSpriteImage(int i, @Nullable String path, @Nullable BufferedImage bi, boolean animate){
+        if(i>=0&&i<spriteList.length&&spriteList[i]!=null){
+            if(bi==null) {
+                spriteList[i].setCurImage(path, animate);
+            }else if(path==null){
+                spriteList[i].setCurImage(bi, animate);
+            }
+        }
     }
 
-    public Sprite[][] getSpriteSheet(){
-        return spriteSheet;
+    public Sprite[] getSprites(){
+        return spriteList;
     }
 }

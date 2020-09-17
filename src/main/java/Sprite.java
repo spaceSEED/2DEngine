@@ -1,14 +1,20 @@
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.awt.image.ColorModel;
 import java.io.File;
+import java.nio.Buffer;
 
 public class Sprite {//todo
     int startx, starty, endx, endy;//screen space used
 
     boolean animated=false;
     long animationQuantum=0;//time til next frame
-    BufferedImage curFrame;//current frame (or last animation frame)
+    BufferedImage[] frames;//animation frames
+    int curFrame=0;
 
     BufferedImage spriteImage;//full sprite image
 
@@ -18,23 +24,40 @@ public class Sprite {//todo
         endx=ex;endy=ey;
     }
 
-    public void setCurImage(BufferedImage i, boolean animate){
+    public void setCurImage(BufferedImage i, boolean animate){//todo getFrames for animated sprites
         animated=animate;
-        spriteImage=i;
+        spriteImage=adjustImage(i);
     }
     public void setCurImage(String path, boolean animate){
         animated=animate;
         try {
             spriteImage= ImageIO.read(new File(path));
+            spriteImage=adjustImage(spriteImage);
         }catch(Exception e){
             System.out.print(e.getMessage());
         }
     }
 
-    public BufferedImage getSprite(){//return a rescaled image on the proper animation frame
-        BufferedImage bi =new BufferedImage((endx-startx),(endy-starty),BufferedImage.TYPE_INT_ARGB);
-        //todo get scaled true-current animation frame
+    private BufferedImage adjustImage(BufferedImage im){
+        BufferedImage bi=new BufferedImage((endx-startx),(endy-starty),BufferedImage.TYPE_INT_ARGB);
+        Graphics2D tempG=bi.createGraphics();
+        tempG.drawImage(spriteImage, null, 0, 0);
         return bi;
+    }
+
+    private static long called=0;
+    public BufferedImage getSprite(){//return a rescaled image on the proper animation frame
+        if(animated){
+            if(called>=animationQuantum){
+                called=0;
+                if(++curFrame>=frames.length){
+                    curFrame=0;
+                }
+            }
+            return frames[curFrame];
+        }else{
+            return spriteImage;
+        }
     }
 
     private BufferedImage[] findFrames(BufferedImage bi){

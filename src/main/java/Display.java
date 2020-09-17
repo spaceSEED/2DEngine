@@ -41,14 +41,14 @@ public class Display /*implements Runnable*/{
             Scene cur=Main.levels[scene];
             Main.BackgroundLayers=cur.getBGLayers();
             Main.ForegroundLayers=cur.getFGLayers();
-            Main.spriteSheet=cur.getSpriteSheet();
+            Main.spriteList=cur.getSprites();
 
         }
 //static int cnt=0;
         public void update(){//was run()
             //while(true) {
-                sequentialParse();//todo replace with better method
-                //imageDraw();
+                //sequentialParse();//todo replace with better method
+                imageDraw();
                 try {
                     //wait(2);
                 } catch (Exception e) {
@@ -105,7 +105,14 @@ public class Display /*implements Runnable*/{
                     gBg.drawImage(Main.BackgroundLayers[i].art,null,0,0);
                 }
             }
-            //todo handle sprites
+            Sprite[] sl=Main.spriteList;
+            for(int i=0;i<sl.length;i++){
+                if(sl[i]!=null&&
+                        ((sl[i].startx>=viewBounds[0]&&sl[i].startx<=viewBounds[2]&&sl[i].starty>=viewBounds[1]&&sl[i].starty<=viewBounds[3])
+                ||(sl[i].endx>=viewBounds[0]&&sl[i].endx<=viewBounds[2]&&sl[i].endy>=viewBounds[1]&&sl[i].endy<=viewBounds[3]))){
+                    gBg.drawImage(sl[i].getSprite(),null,sl[i].startx,sl[i].starty);
+                }
+            }
             for(int i=0;i<Main.FGL;i++){
                 if(Main.ForegroundLayers[i].art!=null) {
                     //graphics.drawImage(Main.ForegroundLayers[i].art, 0, 0, null);
