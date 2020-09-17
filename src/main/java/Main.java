@@ -38,12 +38,13 @@ public class Main {
         }
         levels[0].setBGLayer(0,new Layer(assetPath+"foxtrot.jpg"));//test
         levels[0].setFGLayer(0,new Layer(assetPath+"strawberry.jpg"));//test
-        levels[0].setSprite(0,new Sprite(100,100,140,140));//test
+        levels[0].setSprite(0,new Sprite(100,100,200,200));//test
         levels[0].setSpriteImage(0,assetPath+"strawberry.jpg",null,false);//test
 
 
 
         window=new Display(640,480);
+        window.setFittedLayers(true);
         //Thread disp = new Thread(window);
         //disp.start();
 

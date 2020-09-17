@@ -1,5 +1,6 @@
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -66,7 +67,9 @@ public class Sprite {//todo
     private BufferedImage adjustImage(BufferedImage im){
         BufferedImage bi=new BufferedImage((endx-startx),(endy-starty),BufferedImage.TYPE_INT_ARGB);
         Graphics2D tempG=bi.createGraphics();
-        tempG.drawImage(spriteImage, null, 0, 0);//todo readjust image size to fit
+        double wid_ratio=(double)spriteImage.getWidth()/(double)(endx-startx);
+        double hei_ratio=(double)spriteImage.getHeight()/(double)(endy-starty);
+        tempG.drawImage(spriteImage, new BIOP(wid_ratio,hei_ratio), 0, 0);
         return bi;
     }
 

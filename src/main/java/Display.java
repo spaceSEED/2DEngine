@@ -11,6 +11,7 @@ public class Display /*implements Runnable*/{
         Graphics2D gBg;//used to draw to the graphics buffer
         int viewBounds[];//top-left (x,y); bottom-right (x,y)
         int wid, hei;
+        boolean fittedLayers=false;
 
         public Display(int wid, int hei){
             load(0);
@@ -44,18 +45,18 @@ public class Display /*implements Runnable*/{
             Main.spriteList=cur.getSprites();
 
         }
-//static int cnt=0;
-        public void update(){//was run()
-            //while(true) {
+
+        public void update(){
                 //sequentialParse();//todo replace with better methods
                 imageDraw();
-                try {
+
+
+                /*try {
                     //wait(2);
                 } catch (Exception e) {
-                }
+                }*/
+
                 graphics.drawImage(graphicsBuffer,0,0,null);
-                //cnt++;
-            //}
         }
 
         public void sequentialParse(){//Update by sequentially updating each pixel; slowest method
@@ -100,7 +101,11 @@ public class Display /*implements Runnable*/{
             for(int i=0;i<Main.BGL;i++){
                 if(Main.BackgroundLayers[i].art!=null) {
                     //graphics.drawImage(Main.BackgroundLayers[i].art, 0, 0, null);
-                    gBg.drawImage(Main.BackgroundLayers[i].art,null,0,0);
+                    if(fittedLayers){
+                        gBg.drawImage(Main.BackgroundLayers[i].getFittedImage(wid,hei), null, 0, 0);
+                    }else {
+                        gBg.drawImage(Main.BackgroundLayers[i].art, null, 0, 0);
+                    }
                 }
             }
             Sprite[] sl=Main.spriteList;
@@ -114,10 +119,15 @@ public class Display /*implements Runnable*/{
             for(int i=0;i<Main.FGL;i++){
                 if(Main.ForegroundLayers[i].art!=null) {
                     //graphics.drawImage(Main.ForegroundLayers[i].art, 0, 0, null);
-                    gBg.drawImage(Main.ForegroundLayers[i].art,null,0,0);
+                    if(fittedLayers){
+                        gBg.drawImage(Main.ForegroundLayers[i].getFittedImage(wid,hei),null,0,0);
+                    }else{
+                        gBg.drawImage(Main.ForegroundLayers[i].art,null,0,0);
+                    }
                 }
             }
         }
+
 
         public void scroll(int x, int y){
             viewBounds[0]+=x;
@@ -126,5 +136,9 @@ public class Display /*implements Runnable*/{
             viewBounds[3]+=y;
             //todo handle layer scrolling (parallax)
             gBg.translate(-x,-y);
+        }
+
+        public void setFittedLayers(boolean b){
+            fittedLayers=b;
         }
 }

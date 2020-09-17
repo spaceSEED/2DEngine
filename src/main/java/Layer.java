@@ -6,6 +6,7 @@ import java.awt.image.*;
 
 public class Layer {
     public boolean isStatic=true;//set ability to scroll/image image scaling
+    private BufferedImage fittedArt;
     public BufferedImage art;
     public double scroll_v=0.0;//scroll velocity relative to the screen
 
@@ -29,6 +30,23 @@ public class Layer {
     }
     public boolean getStatic(){
         return isStatic;
+    }
+
+    public BufferedImage getFittedImage(int wid, int hei){
+        if(fittedArt==null){
+            fittedArt=new BufferedImage(wid,hei,BufferedImage.TYPE_INT_ARGB);
+            Graphics2D tempG=fittedArt.createGraphics();
+            double wid_ratio=(double)art.getWidth()/(double)wid;
+            double hei_ratio=(double)art.getHeight()/(double)hei;
+            tempG.drawImage(art, new BIOP(wid_ratio,hei_ratio), 0, 0);
+        }else if(fittedArt.getWidth()!=wid||fittedArt.getHeight()!=hei){
+            fittedArt=new BufferedImage(wid,hei,BufferedImage.TYPE_INT_ARGB);
+            Graphics2D tempG=fittedArt.createGraphics();
+            double wid_ratio=(double)art.getWidth()/(double)wid;
+            double hei_ratio=(double)art.getHeight()/(double)hei;
+            tempG.drawImage(art, new BIOP(wid_ratio,hei_ratio), 0, 0);
+        }
+        return fittedArt;
     }
 
     public void setImage(BufferedImage a){
