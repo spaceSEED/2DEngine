@@ -82,7 +82,7 @@ public class Scene {
         }
         return false;
     }
-    private boolean inside(int sx1, int sy1, int ex1, int ey1, int sx2, int sy2, int ex2, int ey2){
+    private boolean inside(int sx1, int sy1, int ex1, int ey1, int sx2, int sy2, int ex2, int ey2){//parameters for determining collision
         if(sx2>=sx1&&sx2<=ex1&&sy2>=sy1&&sy2<=ey1){
             return true;
         }else if(ex2>=sx1&&ex2<=ex1&&ey2>=sy1&&ey2<=ey1) {
@@ -90,6 +90,14 @@ public class Scene {
         }else if(sx2>=sx1&&sx2<=ex1&&ey2>=sy1&&ey2<=ey1) {
             return true;
         }else if(ex2>=sx1&&ex2<=ex1&&sy2>=sy1&&sy2<=ey1) {
+            return true;
+        }else if(sx1>=sx2&&sx1<=ex2&&sy1>=sy2&&sy1<=ey2){
+            return true;
+        }else if(ex1>=sx2&&ex1<=ex2&&ey1>=sy2&&ey1<=ey2) {
+            return true;
+        }else if(sx1>=sx2&&sx1<=ex2&&ey1>=sy2&&ey1<=ey2) {
+            return true;
+        }else if(ex1>=sx2&&ex1<=ex2&&sy1>=sy2&&sy1<=ey2) {
             return true;
         }
         return false;

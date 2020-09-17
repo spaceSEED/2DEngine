@@ -47,7 +47,7 @@ public class Display /*implements Runnable*/{
 //static int cnt=0;
         public void update(){//was run()
             //while(true) {
-                //sequentialParse();//todo replace with better method
+                //sequentialParse();//todo replace with better methods
                 imageDraw();
                 try {
                     //wait(2);
@@ -69,16 +69,14 @@ public class Display /*implements Runnable*/{
                             rgba=rgbat;
                         }
                     }
-                    //todo check for sprite + color
-                    /*if(r==0&&g==0&&b==0&&a==0) {
-                            int rgba[] = Main.spriteSheet
-                            if (rgba[0] != 0 || rgba[1] != 0 || rgba[2] != 0 || rgba[3] != 0) {
-                                r = rgba[0];
-                                g = rgba[1];
-                                b = rgba[2];
-                                a = rgba[3];
+                    if(rgba==0){
+                        for(int i=0;i<Main.spriteList.length;i++) {
+                            int rgbat = Main.spriteList[i].getSprite().getRGB(x,y);
+                            if (rgbat<0) {
+                                rgba=rgbat;
                             }
-                    }*/
+                        }
+                    }
                     if(rgba==0) {
                         for (int i = Main.BGL-1; i >=0 ; i--) {
                             int rgbat = Main.BackgroundLayers[i].getRGBA(x, y);
@@ -127,6 +125,6 @@ public class Display /*implements Runnable*/{
             viewBounds[2]+=x;
             viewBounds[3]+=y;
             //todo handle layer scrolling (parallax)
-            graphics=graphics.create(-x,-y,wid,hei);
+            gBg.translate(-x,-y);
         }
 }

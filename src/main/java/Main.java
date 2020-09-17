@@ -61,6 +61,7 @@ public class Main {
         if(Input.checkPushFlag!=-1){//action if a given key is pushed (use KeyEvent.VK_?)
             if(Input.checkPushFlag==KeyEvent.VK_RIGHT){//movement example
                 window.scroll(10,0);
+                spriteList[0].moveSpriteBy(10,0);
             }
         }
         if(Input.checkRelFlag!=-1){//action if a given key is released (use KeyEvent.VK_?)
