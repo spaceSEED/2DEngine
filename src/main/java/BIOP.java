@@ -37,7 +37,7 @@ public class BIOP implements BufferedImageOp {
     @Override
     public BufferedImage filter(BufferedImage src, BufferedImage dest){
         if(dest==null){
-            dest=new BufferedImage((int)(src.getWidth()),(int)(src.getHeight()),src.getType());
+            dest=new BufferedImage((int)(src.getWidth()/wid_ratio),(int)(src.getHeight()/hei_ratio),src.getType());
         }else if(src.getType()!=dest.getType()){
             dest=new BufferedImage(dest.getWidth(), dest.getHeight(),src.getType());
         }

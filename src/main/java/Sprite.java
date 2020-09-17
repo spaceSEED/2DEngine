@@ -67,9 +67,9 @@ public class Sprite {//todo
     private BufferedImage adjustImage(BufferedImage im){
         BufferedImage bi=new BufferedImage((endx-startx),(endy-starty),BufferedImage.TYPE_INT_ARGB);
         Graphics2D tempG=bi.createGraphics();
-        double wid_ratio=(double)spriteImage.getWidth()/(double)(endx-startx);
-        double hei_ratio=(double)spriteImage.getHeight()/(double)(endy-starty);
-        tempG.drawImage(spriteImage, new BIOP(wid_ratio,hei_ratio), 0, 0);
+        double wid_ratio=(double)im.getWidth()/(double)(endx-startx);
+        double hei_ratio=(double)im.getHeight()/(double)(endy-starty);
+        tempG.drawImage(im, new BIOP(wid_ratio,hei_ratio), 0, 0);
         return bi;
     }
 

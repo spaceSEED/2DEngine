@@ -102,7 +102,8 @@ public class Display /*implements Runnable*/{
                 if(Main.BackgroundLayers[i].art!=null) {
                     //graphics.drawImage(Main.BackgroundLayers[i].art, 0, 0, null);
                     if(fittedLayers){
-                        gBg.drawImage(Main.BackgroundLayers[i].getFittedImage(wid,hei), null, 0, 0);
+                        BufferedImage temp=Main.BackgroundLayers[i].getFittedImage(wid,hei);
+                        gBg.drawImage(temp, null, 0, 0);
                     }else {
                         gBg.drawImage(Main.BackgroundLayers[i].art, null, 0, 0);
                     }
@@ -120,7 +121,8 @@ public class Display /*implements Runnable*/{
                 if(Main.ForegroundLayers[i].art!=null) {
                     //graphics.drawImage(Main.ForegroundLayers[i].art, 0, 0, null);
                     if(fittedLayers){
-                        gBg.drawImage(Main.ForegroundLayers[i].getFittedImage(wid,hei),null,0,0);
+                        BufferedImage temp=Main.ForegroundLayers[i].getFittedImage(wid,hei);
+                        gBg.drawImage(temp,null,0,0);
                     }else{
                         gBg.drawImage(Main.ForegroundLayers[i].art,null,0,0);
                     }
