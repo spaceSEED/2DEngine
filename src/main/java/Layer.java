@@ -10,8 +10,8 @@ public class Layer {
     private BufferedImage fittedArt;
     public BufferedImage art;
     int[] pos=new int[2];
-    public int scroll_vx=0;//scroll velocity relative to the screen 0==static
-    public int scroll_vy=0;
+    int scroll_vx=0;//scroll velocity relative to the screen 0==static
+    int scroll_vy=0;
 
     public Layer(){
         pos[0]=0;pos[1]=0;

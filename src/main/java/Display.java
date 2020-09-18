@@ -154,11 +154,14 @@ public class Display /*implements Runnable*/{
             viewBounds[1]+=y;
             viewBounds[2]+=x;
             viewBounds[3]+=y;
-            //todo handle layer scrolling (parallax)
 
             for(int i=0;i<Main.BGL;i++){
                 Main.BackgroundLayers[i].translateP(x,y);
             }
+            for(int i=0;i<Main.FGL;i++){
+                Main.ForegroundLayers[i].translateP(x,y);
+            }
+
             gBg.translate(-x,-y);
         }
 
