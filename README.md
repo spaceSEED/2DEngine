@@ -6,13 +6,16 @@ Currently Supported:
 -Background layers
 -Foreground layers
 -Layer Scaling
+-Parallax layers
 -Basic Sprites
 -Sprite Scaling
 -Multi-key keyboard inputs
 
 
 Soon-to-come:
--Parallax layers
 -Sprite Animation
 -Mouse input support
+-Sprite Rotation
+-Audio Support
+-Foreground Text
 
