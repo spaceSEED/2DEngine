@@ -45,7 +45,7 @@ public class Sprite {//todo
         endx+=x;
         endy+=y;
     }
-    public void moveSpriteTo(int x, int y){
+    public void moveSpriteTo(int x, int y){//move sprite to position
         int w=endx-startx;
         int h=endy-starty;
         startx=x;
@@ -53,6 +53,15 @@ public class Sprite {//todo
         endx=x+w;
         endy=y+h;
     }
+    public void moveSpriteToInScreen(int x, int y){//moves sprtie to a position within screen space offset
+        int w=endx-startx;
+        int h=endy-starty;
+        startx=x+Display.viewBounds[0];
+        starty=y+Display.viewBounds[1];
+        endx=x+w;
+        endy=y+h;
+    }
+
     public void resizeSprite(int sx, int sy, int ex, int ey){
         startx=sx;
         starty=sy;

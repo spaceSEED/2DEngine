@@ -41,7 +41,7 @@ public class Main {
         levels[0].setBGLayer(0,new Layer(assetPath+"foxtrot.jpg"));//test
         levels[0].setFGLayer(0,new Layer(assetPath+"strawberry.jpg"));//
         levels[0].getFGLayers()[0].setPos(25,25);
-        levels[0].getBGLayers()[0].setScroll(2,1);
+        //levels[0].getBGLayers()[0].setScroll(2,1);
         levels[0].setSprite(0,new Sprite(100,100,140,140));//test
         levels[0].setSpriteImage(0,assetPath+"strawberry.jpg",null,false);//test
         /////////////test code/////////////////
@@ -61,7 +61,8 @@ public class Main {
 static private long actionCntr=0;//for use if action updates are too frequent/fast
 
     public static void run(){//gamelogic here
-        if(actionCntr>=10&&!Input.checkPushFlag.isEmpty()){//action if a given key is pushed (use KeyEvent.VK_?)
+        if(actionCntr>=10&&(!Input.checkPushFlag.isEmpty())||MouseInput.mouseActionPos!=null||(!MouseInput.mouseAction.isEmpty())){
+            //action if a given key is pushed (use KeyEvent.VK_?) or mouse event (MouseEvent.?)
             if(Input.checkPushFlag.contains(KeyEvent.VK_RIGHT)){//movement example
                 window.scroll(1,0);
                 spriteList[0].moveSpriteBy(2,0);
@@ -69,6 +70,10 @@ static private long actionCntr=0;//for use if action updates are too frequent/fa
             if(Input.checkPushFlag.contains(KeyEvent.VK_DOWN)){//movement example
                 window.scroll(0,1);
                 spriteList[0].moveSpriteBy(0,2);
+            }
+            if(MouseInput.mouseActionPos!=null){//mouse position use example
+                spriteList[0].moveSpriteToInScreen(MouseInput.mouseActionPos.x,MouseInput.mouseActionPos.y);
+                MouseInput.mouseActionPos=null;
             }
 
             actionCntr=0;

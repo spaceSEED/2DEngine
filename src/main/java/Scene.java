@@ -1,4 +1,3 @@
-import com.sun.istack.internal.Nullable;
 
 import java.awt.image.BufferedImage;
 
@@ -33,7 +32,7 @@ public class Scene {
             spriteList[i]=s;
         }
     }
-    public void setSpriteImage(int i, @Nullable String path, @Nullable BufferedImage bi, boolean animate){
+    public void setSpriteImage(int i, String path, BufferedImage bi, boolean animate){
         if(i>=0&&i<spriteList.length&&spriteList[i]!=null){
             if(bi==null) {
                 spriteList[i].setCurImage(path, animate);

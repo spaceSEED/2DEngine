@@ -9,7 +9,7 @@ public class Display /*implements Runnable*/{
         Graphics graphics;
         BufferedImage graphicsBuffer;//to prevent flickering
         Graphics2D gBg;//used to draw to the graphics buffer
-        int viewBounds[];//top-left (x,y); bottom-right (x,y)
+        static int viewBounds[];//top-left (x,y); bottom-right (x,y)
         int wid, hei;
         boolean fittedBG=false;
         boolean fittedFG=false;
