@@ -11,7 +11,8 @@ public class Display /*implements Runnable*/{
         Graphics2D gBg;//used to draw to the graphics buffer
         int viewBounds[];//top-left (x,y); bottom-right (x,y)
         int wid, hei;
-        boolean fittedLayers=false;
+        boolean fittedBG=false;
+        boolean fittedFG=false;
 
         public Display(int wid, int hei){
             load(0);
@@ -30,6 +31,7 @@ public class Display /*implements Runnable*/{
             frame.setFocusable(true);
             frame.requestFocusInWindow();
             frame.addKeyListener(new Input());
+            frame.addMouseListener(new MouseInput());
 
 
             frame.setVisible(true);
@@ -65,7 +67,14 @@ public class Display /*implements Runnable*/{
                     Color curColor=new Color(0,0,0,0);
                     int rgba=0;//todo use the 'alpha' value properly
                     for(int i=Main.FGL-1;i>=0;i--){
-                        int rgbat=Main.ForegroundLayers[i].getRGBA(x,y);
+                        int rgbat=0;
+                        if(fittedFG){
+                            Main.ForegroundLayers[i].getFittedImage(wid,hei);
+                            rgbat=Main.ForegroundLayers[i].getFittedRGBA(x,y);
+                        }else{
+                            rgbat=Main.ForegroundLayers[i].getRGBA(x,y);
+                        }
+
                         if(rgbat<0){//||rgba[3]!=0){
                             rgba=rgbat;
                         }
@@ -80,7 +89,14 @@ public class Display /*implements Runnable*/{
                     }
                     if(rgba==0) {
                         for (int i = Main.BGL-1; i >=0 ; i--) {
-                            int rgbat = Main.BackgroundLayers[i].getRGBA(x, y);
+                            int rgbat=0;
+                            if(fittedBG){
+                                Main.BackgroundLayers[i].getFittedImage(wid,hei);
+                                rgbat=Main.BackgroundLayers[i].getFittedRGBA(x,y);
+                            }else{
+                                rgbat=Main.BackgroundLayers[i].getRGBA(x,y);
+                            }
+
                             if (rgbat<0) {
                                 rgba=rgbat;
                             }
@@ -101,11 +117,11 @@ public class Display /*implements Runnable*/{
             for(int i=0;i<Main.BGL;i++){
                 if(Main.BackgroundLayers[i].art!=null) {
                     //graphics.drawImage(Main.BackgroundLayers[i].art, 0, 0, null);
-                    if(fittedLayers){
+                    if(fittedBG){
                         BufferedImage temp=Main.BackgroundLayers[i].getFittedImage(wid,hei);
                         gBg.drawImage(temp, null, 0, 0);
                     }else {
-                        gBg.drawImage(Main.BackgroundLayers[i].art, null, 0, 0);
+                        gBg.drawImage(Main.BackgroundLayers[i].art, null, Main.BackgroundLayers[i].getPos()[0], Main.BackgroundLayers[i].getPos()[1]);
                     }
                 }
             }
@@ -120,27 +136,36 @@ public class Display /*implements Runnable*/{
             for(int i=0;i<Main.FGL;i++){
                 if(Main.ForegroundLayers[i].art!=null) {
                     //graphics.drawImage(Main.ForegroundLayers[i].art, 0, 0, null);
-                    if(fittedLayers){
+                    if(fittedFG){
                         BufferedImage temp=Main.ForegroundLayers[i].getFittedImage(wid,hei);
                         gBg.drawImage(temp,null,0,0);
                     }else{
-                        gBg.drawImage(Main.ForegroundLayers[i].art,null,0,0);
+                        gBg.drawImage(Main.ForegroundLayers[i].art,null,Main.ForegroundLayers[i].getPos()[0],Main.ForegroundLayers[i].getPos()[1]);
                     }
                 }
             }
         }
 
 
-        public void scroll(int x, int y){
-            viewBounds[0]+=x;
-            viewBounds[1]+=y;
-            viewBounds[2]+=x;
-            viewBounds[3]+=y;
+        public void scroll(double x, double y){
+            viewBounds[0]+=(int)x;
+            viewBounds[1]+=(int)y;
+            viewBounds[2]+=(int)x;
+            viewBounds[3]+=(int)y;
             //todo handle layer scrolling (parallax)
+            //todo handle static layers
+            for(int i=0;i<Main.BGL;i++){
+                if(Main.BackgroundLayers[i].getStatic()){//static
+                    Main.BackgroundLayers[i].translate(x,y);
+                }else{//parallax
+
+                }
+            }
             gBg.translate(-x,-y);
         }
 
-        public void setFittedLayers(boolean b){
-            fittedLayers=b;
+        public void setFittedLayers(boolean background, boolean foreground){
+            fittedBG=background;
+            fittedFG=foreground;
         }
 }

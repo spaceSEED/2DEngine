@@ -1,19 +1,17 @@
-import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
+import java.util.*;
 
-public class Input implements KeyListener {
-    static int checkPushFlag=-1;
-    static int checkRelFlag=-1;
-    static int checkHitFlag=-1;
+public class Input implements KeyListener {//todo multi-input
+    static Set<Integer> checkPushFlag=new TreeSet<Integer>();
+    static Queue<Character> typedChar=new LinkedList<Character>();
 
     public void keyTyped(KeyEvent e){
-        checkHitFlag=e.getKeyCode();
+        typedChar.add(e.getKeyChar());
     }
     public void keyPressed(KeyEvent e){
-        checkPushFlag=e.getKeyCode();
+        checkPushFlag.add(e.getKeyCode());
     }
     public void keyReleased(KeyEvent e){
-        checkRelFlag=e.getKeyCode();
+        checkPushFlag.remove(e.getKeyCode());
     }
 }
