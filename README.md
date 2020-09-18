@@ -10,11 +10,11 @@ Currently Supported:
 -Basic Sprites
 -Sprite Scaling
 -Multi-key keyboard inputs
+-Mouse input support
 
 
 Soon-to-come:
 -Sprite Animation
--Mouse input support
 -Sprite Rotation
 -Audio Support
 -Foreground Text
