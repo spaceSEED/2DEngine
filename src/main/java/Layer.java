@@ -5,12 +5,13 @@ import java.awt.*;
 import java.awt.image.*;
 
 public class Layer {
-    public boolean isStatic=true;//set ability to scroll/image image scaling
+
     public boolean wrapAround=false;//set ability to wrap back around to its beginning
     private BufferedImage fittedArt;
     public BufferedImage art;
     int[] pos=new int[2];
-    public double scroll_v=0.0;//scroll velocity relative to the screen
+    public int scroll_vx=0;//scroll velocity relative to the screen 0==static
+    public int scroll_vy=0;
 
     public Layer(){
         pos[0]=0;pos[1]=0;
@@ -29,12 +30,6 @@ public class Layer {
     }
 
 
-    public void setStatic(boolean a){
-        isStatic=a;
-    }
-    public boolean getStatic(){
-        return isStatic;
-    }
     public void setWrappable(boolean a){
         wrapAround=a;
     }
@@ -43,6 +38,7 @@ public class Layer {
     }
 
     public BufferedImage getFittedImage(int wid, int hei){
+        if(art==null){return null;}
         if(fittedArt==null){
             fittedArt=new BufferedImage(wid,hei,BufferedImage.TYPE_INT_ARGB);
             Graphics2D tempG=fittedArt.createGraphics();
@@ -70,11 +66,12 @@ public class Layer {
         }
     }
 
-    public void setScroll(double a){
-        scroll_v=a;
+    public void setScroll(int x, int y){
+        scroll_vx=x;
+        scroll_vy=y;
     }
 
-    public int getRGBA(int x, int y){//return -1 in first position if pixel doesn't exist
+    public int getRGBA(int x, int y){//return 0 if pixel doesn't exist
         int rgba=0;
         if(art==null||y>=art.getHeight()||x>=art.getWidth()){
             rgba=0;
@@ -102,9 +99,17 @@ public class Layer {
     public int[] getPos(){
         return pos;
     }
-    public void translate(double x, double y){
-        pos[0]+=(int)x;
-        pos[1]+=(int)y;
+    public void translate(int x, int y){
+        pos[0]+=x;
+        pos[1]+=y;
+    }
+    public void translateP(int x, int y){
+        if(x!=0) {
+            pos[0] += (x - scroll_vx);
+        }
+        if(y!=0) {
+            pos[1] += (y - scroll_vy);
+        }
     }
 
 

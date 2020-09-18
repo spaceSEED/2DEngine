@@ -48,8 +48,8 @@ public class Display /*implements Runnable*/{
 
         }
 
-        public void update(){
-                //sequentialParse();//todo replace with better methods
+        public void update(){//pick a drawing method
+                //sequentialParse();
                 imageDraw();
 
 
@@ -62,7 +62,7 @@ public class Display /*implements Runnable*/{
         }
 
         public void sequentialParse(){//Update by sequentially updating each pixel; slowest method
-            for(int x=0;x<wid;x++){
+            for(int x=0;x<wid;x++){//todo get static layers working
                 for(int y=0;y<hei;y++){
                     Color curColor=new Color(0,0,0,0);
                     int rgba=0;//todo use the 'alpha' value properly
@@ -81,9 +81,11 @@ public class Display /*implements Runnable*/{
                     }
                     if(rgba==0){
                         for(int i=0;i<Main.spriteList.length;i++) {
-                            int rgbat = Main.spriteList[i].getSprite().getRGB(x,y);
-                            if (rgbat<0) {
-                                rgba=rgbat;
+                            if(Main.spriteList[i]!=null) {
+                                int rgbat = Main.spriteList[i].getRGB(x, y);
+                                if (rgbat < 0) {
+                                    rgba = rgbat;
+                                }
                             }
                         }
                     }
@@ -119,7 +121,7 @@ public class Display /*implements Runnable*/{
                     //graphics.drawImage(Main.BackgroundLayers[i].art, 0, 0, null);
                     if(fittedBG){
                         BufferedImage temp=Main.BackgroundLayers[i].getFittedImage(wid,hei);
-                        gBg.drawImage(temp, null, 0, 0);
+                        gBg.drawImage(temp, null, viewBounds[0], viewBounds[1]);
                     }else {
                         gBg.drawImage(Main.BackgroundLayers[i].art, null, Main.BackgroundLayers[i].getPos()[0], Main.BackgroundLayers[i].getPos()[1]);
                     }
@@ -138,7 +140,7 @@ public class Display /*implements Runnable*/{
                     //graphics.drawImage(Main.ForegroundLayers[i].art, 0, 0, null);
                     if(fittedFG){
                         BufferedImage temp=Main.ForegroundLayers[i].getFittedImage(wid,hei);
-                        gBg.drawImage(temp,null,0,0);
+                        gBg.drawImage(temp,null,viewBounds[0],viewBounds[1]);
                     }else{
                         gBg.drawImage(Main.ForegroundLayers[i].art,null,Main.ForegroundLayers[i].getPos()[0],Main.ForegroundLayers[i].getPos()[1]);
                     }
@@ -147,19 +149,15 @@ public class Display /*implements Runnable*/{
         }
 
 
-        public void scroll(double x, double y){
-            viewBounds[0]+=(int)x;
-            viewBounds[1]+=(int)y;
-            viewBounds[2]+=(int)x;
-            viewBounds[3]+=(int)y;
+        public void scroll(int x, int y){
+            viewBounds[0]+=x;
+            viewBounds[1]+=y;
+            viewBounds[2]+=x;
+            viewBounds[3]+=y;
             //todo handle layer scrolling (parallax)
-            //todo handle static layers
-            for(int i=0;i<Main.BGL;i++){
-                if(Main.BackgroundLayers[i].getStatic()){//static
-                    Main.BackgroundLayers[i].translate(x,y);
-                }else{//parallax
 
-                }
+            for(int i=0;i<Main.BGL;i++){
+                Main.BackgroundLayers[i].translateP(x,y);
             }
             gBg.translate(-x,-y);
         }

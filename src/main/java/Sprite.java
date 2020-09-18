@@ -87,6 +87,19 @@ public class Sprite {//todo
             return spriteImage;
         }
     }
+    public int getRGB(int x, int y){
+        if(x>endx||y>endy||x<startx||y<starty){
+            return 0;
+        }
+        int rgba=0;
+        BufferedImage art=this.getSprite();
+        if(art==null||y-starty>=art.getHeight()||x-startx>=art.getWidth()){
+            rgba=0;
+        }else {
+            rgba=art.getRGB(x-startx, y-starty);
+        }
+        return rgba;
+    }
 
     private BufferedImage[] findFrames(BufferedImage bi){
         BufferedImage frames[];
