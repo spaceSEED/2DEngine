@@ -5,10 +5,15 @@ It's still in progress but is an attempt at using the Java graphics libraries fo
 Currently Supported:
 -Background layers
 -Foreground layers
+-Layer Scaling
 -Basic Sprites
+-Sprite Scaling
 -Single-key keyboard inputs
 
+
 Soon to come:
--Sprite scaling
+-Parallax layers
 -Sprite Animation
+-Multi-input support
+-Mouse input support
 
