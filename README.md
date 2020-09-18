@@ -11,7 +11,7 @@ Currently Supported:
 -Single-key keyboard inputs
 
 
-Soon to come:
+Soon-to-come:
 -Parallax layers
 -Sprite Animation
 -Multi-input support
