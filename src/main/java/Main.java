@@ -7,11 +7,10 @@ public class Main {
     static int scenes=1;
     static String assetPath="assets\\";
 
+    static boolean typing=false;
 
 
-    public static Sprite spriteList[];//grid of sprites
-    public static Layer BackgroundLayers[];//0 is top layer
-    public static Layer ForegroundLayers[];//0 is top layer
+
     public static Scene levels[];
     public static int pos[];//top left window corner position
     static Display window;
@@ -19,13 +18,6 @@ public class Main {
     public static void main(String[] args){
         pos=new int[2];
         pos[0]=0;pos[1]=0;
-        if(args.length>0) {
-            BackgroundLayers = new Layer[Integer.parseInt(args[0])];
-            ForegroundLayers = new Layer[Integer.parseInt(args[1])];
-        }else{
-            BackgroundLayers = new Layer[BGL];
-            ForegroundLayers = new Layer[FGL];
-        }
         levels=new Scene[scenes];
         for(int i=0;i<scenes;i++){//Fill all preloaded scenes
             levels[i] = new Scene(BGL,FGL,50);
@@ -44,12 +36,13 @@ public class Main {
         //levels[0].getBGLayers()[0].setScroll(2,1);
         levels[0].setSprite(0,new Sprite(100,100,140,140));//test
         levels[0].setSpriteImage(0,assetPath+"strawberry.jpg",null,false);//test
+
         /////////////test code/////////////////
 
 
         window=new Display(640,480);
         //window.setFittedLayers(true,false);//sets background and foreground layers to readjust to fit resolution
-
+        window.displayText("Hello World!",100,200);
 
         while(true){
             window.update();
@@ -61,18 +54,21 @@ public class Main {
 static private long actionCntr=0;//for use if action updates are too frequent/fast
 
     public static void run(){//gamelogic here
-        if(actionCntr>=10&&(!Input.checkPushFlag.isEmpty())||MouseInput.mouseActionPos!=null||(!MouseInput.mouseAction.isEmpty())){
+        if(actionCntr>=10&&((!Input.checkPushFlag.isEmpty())||MouseInput.mouseActionPos!=null||(!MouseInput.mouseAction.isEmpty()))){
             //action if a given key is pushed (use KeyEvent.VK_?) or mouse event (MouseEvent.?)
             if(Input.checkPushFlag.contains(KeyEvent.VK_RIGHT)){//movement example
                 window.scroll(1,0);
-                spriteList[0].moveSpriteBy(2,0);
+                levels[0].getSprites()[0].moveSpriteBy(2,0);
             }
             if(Input.checkPushFlag.contains(KeyEvent.VK_DOWN)){//movement example
                 window.scroll(0,1);
-                spriteList[0].moveSpriteBy(0,2);
+                levels[0].getSprites()[0].moveSpriteBy(0,2);
+            }
+            if(Input.checkPushFlag.contains(KeyEvent.VK_SPACE)){
+                window.clearText();
             }
             if(MouseInput.mouseActionPos!=null){//mouse position use example
-                spriteList[0].moveSpriteToInScreen(MouseInput.mouseActionPos.x,MouseInput.mouseActionPos.y);
+                levels[0].getSprites()[0].moveSpriteToInScreen(MouseInput.mouseActionPos.x,MouseInput.mouseActionPos.y);
                 MouseInput.mouseActionPos=null;
             }
 

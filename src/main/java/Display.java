@@ -1,10 +1,16 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.*;
+import java.util.*;
 
 public class Display /*implements Runnable*/{
 
         public static JFrame frame;
+
+        public static Sprite spriteList[];//grid of sprites
+        public static Layer BackgroundLayers[];//0 is top layer
+        public static Layer ForegroundLayers[];//0 is top layer
+
         //public static JPanel panel;
         Graphics graphics;
         BufferedImage graphicsBuffer;//to prevent flickering
@@ -14,7 +20,14 @@ public class Display /*implements Runnable*/{
         boolean fittedBG=false;
         boolean fittedFG=false;
 
+        Map<String,Point> displayedText=new TreeMap<String,Point>();//stores String, int x, and int y for drawString
+        Color fontColor=Color.BLACK;//default text color
+        Font textFont=new Font("Arial",Font.BOLD,18);//default font
+
         public Display(int wid, int hei){
+            BackgroundLayers = new Layer[Main.BGL];
+            ForegroundLayers = new Layer[Main.FGL];
+
             load(0);
             this.wid=wid;
             this.hei=hei;
@@ -42,15 +55,15 @@ public class Display /*implements Runnable*/{
 
         public void load(int scene){
             Scene cur=Main.levels[scene];
-            Main.BackgroundLayers=cur.getBGLayers();
-            Main.ForegroundLayers=cur.getFGLayers();
-            Main.spriteList=cur.getSprites();
+            BackgroundLayers=cur.getBGLayers();
+            ForegroundLayers=cur.getFGLayers();
+            spriteList=cur.getSprites();
 
         }
 
         public void update(){//pick a drawing method
-                //sequentialParse();
-                imageDraw();
+                //sequentialParse();//very slow
+                imageDraw();//good speed
 
 
                 /*try {
@@ -58,6 +71,16 @@ public class Display /*implements Runnable*/{
                 } catch (Exception e) {
                 }*/
 
+            if(!displayedText.isEmpty()){
+                gBg.setColor(fontColor);
+                gBg.setFont(textFont);
+                Set<String> ks=displayedText.keySet();
+                Iterator it=ks.iterator();
+                while(it.hasNext()){
+                    String out=(String) it.next();
+                    gBg.drawString(out,displayedText.get(out).x,displayedText.get(out).y);
+                }
+            }
                 graphics.drawImage(graphicsBuffer,0,0,null);
         }
 
@@ -69,10 +92,10 @@ public class Display /*implements Runnable*/{
                     for(int i=Main.FGL-1;i>=0;i--){
                         int rgbat=0;
                         if(fittedFG){
-                            Main.ForegroundLayers[i].getFittedImage(wid,hei);
-                            rgbat=Main.ForegroundLayers[i].getFittedRGBA(x,y);
+                            ForegroundLayers[i].getFittedImage(wid,hei);
+                            rgbat=ForegroundLayers[i].getFittedRGBA(x,y);
                         }else{
-                            rgbat=Main.ForegroundLayers[i].getRGBA(x,y);
+                            rgbat=ForegroundLayers[i].getRGBA(x,y);
                         }
 
                         if(rgbat<0){//||rgba[3]!=0){
@@ -80,9 +103,9 @@ public class Display /*implements Runnable*/{
                         }
                     }
                     if(rgba==0){
-                        for(int i=0;i<Main.spriteList.length;i++) {
-                            if(Main.spriteList[i]!=null) {
-                                int rgbat = Main.spriteList[i].getRGB(x, y);
+                        for(int i=0;i<spriteList.length;i++) {
+                            if(spriteList[i]!=null) {
+                                int rgbat = spriteList[i].getRGB(x, y);
                                 if (rgbat < 0) {
                                     rgba = rgbat;
                                 }
@@ -93,10 +116,10 @@ public class Display /*implements Runnable*/{
                         for (int i = Main.BGL-1; i >=0 ; i--) {
                             int rgbat=0;
                             if(fittedBG){
-                                Main.BackgroundLayers[i].getFittedImage(wid,hei);
-                                rgbat=Main.BackgroundLayers[i].getFittedRGBA(x,y);
+                                BackgroundLayers[i].getFittedImage(wid,hei);
+                                rgbat=BackgroundLayers[i].getFittedRGBA(x,y);
                             }else{
-                                rgbat=Main.BackgroundLayers[i].getRGBA(x,y);
+                                rgbat=BackgroundLayers[i].getRGBA(x,y);
                             }
 
                             if (rgbat<0) {
@@ -117,17 +140,17 @@ public class Display /*implements Runnable*/{
 
         public void imageDraw(){//uses image draw methods
             for(int i=0;i<Main.BGL;i++){
-                if(Main.BackgroundLayers[i].art!=null) {
+                if(BackgroundLayers[i].art!=null) {
                     //graphics.drawImage(Main.BackgroundLayers[i].art, 0, 0, null);
                     if(fittedBG){
-                        BufferedImage temp=Main.BackgroundLayers[i].getFittedImage(wid,hei);
+                        BufferedImage temp=BackgroundLayers[i].getFittedImage(wid,hei);
                         gBg.drawImage(temp, null, viewBounds[0], viewBounds[1]);
                     }else {
-                        gBg.drawImage(Main.BackgroundLayers[i].art, null, Main.BackgroundLayers[i].getPos()[0], Main.BackgroundLayers[i].getPos()[1]);
+                        gBg.drawImage(BackgroundLayers[i].art, null, BackgroundLayers[i].getPos()[0], BackgroundLayers[i].getPos()[1]);
                     }
                 }
             }
-            Sprite[] sl=Main.spriteList;
+            Sprite[] sl=spriteList;
             for(int i=0;i<sl.length;i++){
                 if(sl[i]!=null&&
                         ((sl[i].startx>=viewBounds[0]&&sl[i].startx<=viewBounds[2]&&sl[i].starty>=viewBounds[1]&&sl[i].starty<=viewBounds[3])
@@ -136,13 +159,13 @@ public class Display /*implements Runnable*/{
                 }
             }
             for(int i=0;i<Main.FGL;i++){
-                if(Main.ForegroundLayers[i].art!=null) {
+                if(ForegroundLayers[i].art!=null) {
                     //graphics.drawImage(Main.ForegroundLayers[i].art, 0, 0, null);
                     if(fittedFG){
-                        BufferedImage temp=Main.ForegroundLayers[i].getFittedImage(wid,hei);
+                        BufferedImage temp=ForegroundLayers[i].getFittedImage(wid,hei);
                         gBg.drawImage(temp,null,viewBounds[0],viewBounds[1]);
                     }else{
-                        gBg.drawImage(Main.ForegroundLayers[i].art,null,Main.ForegroundLayers[i].getPos()[0],Main.ForegroundLayers[i].getPos()[1]);
+                        gBg.drawImage(ForegroundLayers[i].art,null,ForegroundLayers[i].getPos()[0],ForegroundLayers[i].getPos()[1]);
                     }
                 }
             }
@@ -156,10 +179,10 @@ public class Display /*implements Runnable*/{
             viewBounds[3]+=y;
 
             for(int i=0;i<Main.BGL;i++){
-                Main.BackgroundLayers[i].translateP(x,y);
+                BackgroundLayers[i].translateP(x,y);
             }
             for(int i=0;i<Main.FGL;i++){
-                Main.ForegroundLayers[i].translateP(x,y);
+                ForegroundLayers[i].translateP(x,y);
             }
 
             gBg.translate(-x,-y);
@@ -168,5 +191,22 @@ public class Display /*implements Runnable*/{
         public void setFittedLayers(boolean background, boolean foreground){
             fittedBG=background;
             fittedFG=foreground;
+        }
+
+        public void displayText(String str, int x, int y){
+            displayedText.put(str, new Point(x,y));
+        }
+        public void clearText(){
+            displayedText.clear();
+
+        }
+        public void setFont(Font f){
+            textFont=f;
+        }
+        public void setTextColor(int color){
+            fontColor=new Color(color);
+        }
+        public void setTextColor(Color color){
+            fontColor=color;
         }
 }

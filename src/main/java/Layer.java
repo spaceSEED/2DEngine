@@ -111,6 +111,4 @@ public class Layer {
             pos[1] += (y - scroll_vy);
         }
     }
-
-
 }
