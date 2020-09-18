@@ -1,6 +1,6 @@
 # 2DEngine
-A simple Java-based 2d game engine.
-It's still in progress but is an attempt at using the Java graphics libraries for simple games.
+A simple Java-based 2d game engine, using the Java Graphics library.
+For use with simple 2D game projects.
 
 Currently Supported:
 -Background layers
@@ -8,12 +8,11 @@ Currently Supported:
 -Layer Scaling
 -Basic Sprites
 -Sprite Scaling
--Single-key keyboard inputs
+-Multi-key keyboard inputs
 
 
 Soon-to-come:
 -Parallax layers
 -Sprite Animation
--Multi-input support
 -Mouse input support
 
