@@ -77,12 +77,26 @@ public class Sprite {//todo
         starty=sy;
         endy=ey;
         endx=ex;
-        spriteImage=adjustImage(spriteImage);
+        if(spriteImage!=null) {
+            spriteImage = adjustImage(spriteImage);
+        }
+        if(frames!=null){
+            for(int i=0;i<frames.length;i++){
+                frames[i]=adjustImage(frames[i]);
+            }
+        }
     }
     public void resizeSprite(int wid, int hei){
         endx=startx+wid;
         endy=starty+hei;
-        spriteImage=adjustImage(spriteImage);
+        if(spriteImage!=null) {
+            spriteImage = adjustImage(spriteImage);
+        }
+        if(frames!=null){
+            for(int i=0;i<frames.length;i++){
+                frames[i]=adjustImage(frames[i]);
+            }
+        }
     }
 
     private BufferedImage adjustImage(BufferedImage im){
