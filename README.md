@@ -3,19 +3,20 @@ A simple Java-based 2d game engine, using the Java Graphics library.
 For use with simple 2D game projects.
 
 Currently Supported:
--Background layers
--Foreground layers
--Layer Scaling
--Parallax layers
--Foreground Text
--Basic Sprites
--Sprite Scaling
--Multi-key keyboard inputs
--Mouse input support
+  -Background layers
+  -Foreground layers
+  -Layer Scaling
+  -Parallax layers
+  -Foreground Text
+  -Basic Sprites
+  -Sprite Scaling
+  -Sprite Animation (spritesheet parsing does not work properly yet)
+  -Multi-key keyboard inputs
+  -Mouse input support
 
 
 Soon-to-come:
--Sprite Animation
--Sprite Rotation
--Audio Support
+  -spritesheet support
+  -Sprite Rotation
+  -Audio Support
 
