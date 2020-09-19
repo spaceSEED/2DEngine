@@ -34,8 +34,8 @@ public class Main {
         levels[0].setFGLayer(0,new Layer(assetPath+"strawberry.jpg"));//
         levels[0].getFGLayers()[0].setPos(25,25);
         //levels[0].getBGLayers()[0].setScroll(2,1);
-        levels[0].setSprite(0,new Sprite(100,100,140,140));//test
-        levels[0].setSpriteImage(0,assetPath+"strawberry.jpg",null,false);//test
+        levels[0].setSprite(0,new Sprite(100,100,190,190));//test
+        levels[0].setSpriteImage(0,assetPath+"guybrush_justwalking.png",null,true);//test
 
         /////////////test code/////////////////
 
