@@ -6,11 +6,15 @@ import java.awt.image.BufferedImageOp;
 import java.awt.image.ColorModel;
 import java.awt.image.IndexColorModel;
 
-public class Rotate implements BufferedImageOp {//todo remove rotation artifacts
+public class Rotate implements BufferedImageOp {
     double dif=0;
     double cx, cy;
+    double cos;
+    double sin;
     public Rotate(double dif){
         this.dif=dif;
+        cos=Math.cos(dif);
+        sin=Math.sin(dif);
     }
 
     @Override
@@ -64,11 +68,21 @@ public class Rotate implements BufferedImageOp {//todo remove rotation artifacts
                 s.setLocation(x,y);
                 Point2D d=getPoint2D(s,null);
                 g2d.setColor(new Color(src.getRGB(x,y)));
-                g2d.fillRect((int)d.getX(),(int)d.getY(),1,1);
+                g2d.fillRect((int)round(d.getX()),(int)round(d.getY()),1,1);
             }
         }
 
         return dest;
+    }
+
+    private int round(double a){
+        double b=a;
+        b=a%1;
+        b=b*10;
+        if(b>=5){
+            return (int)(a)+1;
+        }
+        return (int)a;
     }
 
     @Override
@@ -108,8 +122,6 @@ public class Rotate implements BufferedImageOp {//todo remove rotation artifacts
         }
         double x = srcPt.getX()-cx;
         double y = srcPt.getY()-cy;
-        double cos=Math.cos(dif);
-        double sin=Math.sin(dif);
             double a=x*cos-y*-sin;
             double b=x*sin-y*cos;
             x=a+cx;
