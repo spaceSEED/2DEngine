@@ -11,7 +11,7 @@ Currently Supported:
   -Basic Sprites
   -Sprite Scaling
   -Sprite Animation (spritesheet parsing does not work properly yet)
-  -Sprite/Layer Rotation (with some artifacting)
+  -Sprite/Layer Rotation
   -Multi-key keyboard inputs
   -Mouse input support
 
