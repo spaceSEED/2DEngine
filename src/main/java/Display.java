@@ -140,13 +140,13 @@ public class Display /*implements Runnable*/{
 
         public void imageDraw(){//uses image draw methods
             for(int i=0;i<Main.BGL;i++){
-                if(BackgroundLayers[i].art!=null) {
-                    //graphics.drawImage(Main.BackgroundLayers[i].art, 0, 0, null);
+                if(BackgroundLayers[i].getArt()!=null) {
+                    //graphics.drawImage(Main.BackgroundLayers[i].getArt(), 0, 0, null);
                     if(fittedBG){
                         BufferedImage temp=BackgroundLayers[i].getFittedImage(wid,hei);
                         gBg.drawImage(temp, null, viewBounds[0], viewBounds[1]);
                     }else {
-                        gBg.drawImage(BackgroundLayers[i].art, null, BackgroundLayers[i].getPos()[0], BackgroundLayers[i].getPos()[1]);
+                        gBg.drawImage(BackgroundLayers[i].getArt(), null, BackgroundLayers[i].getPos()[0], BackgroundLayers[i].getPos()[1]);
                     }
                 }
             }
@@ -159,13 +159,13 @@ public class Display /*implements Runnable*/{
                 }
             }
             for(int i=0;i<Main.FGL;i++){
-                if(ForegroundLayers[i].art!=null) {
-                    //graphics.drawImage(Main.ForegroundLayers[i].art, 0, 0, null);
+                if(ForegroundLayers[i].getArt()!=null) {
+                    //graphics.drawImage(Main.ForegroundLayers[i].getArt(), 0, 0, null);
                     if(fittedFG){
                         BufferedImage temp=ForegroundLayers[i].getFittedImage(wid,hei);
                         gBg.drawImage(temp,null,viewBounds[0],viewBounds[1]);
                     }else{
-                        gBg.drawImage(ForegroundLayers[i].art,null,ForegroundLayers[i].getPos()[0],ForegroundLayers[i].getPos()[1]);
+                        gBg.drawImage(ForegroundLayers[i].getArt(),null,ForegroundLayers[i].getPos()[0],ForegroundLayers[i].getPos()[1]);
                     }
                 }
             }

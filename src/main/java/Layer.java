@@ -8,10 +8,12 @@ public class Layer {
 
     public boolean wrapAround=false;//set ability to wrap back around to its beginning
     private BufferedImage fittedArt;
+    private BufferedImage rotatedArt;
     public BufferedImage art;
     int[] pos=new int[2];
     int scroll_vx=0;//scroll velocity relative to the screen 0==static
     int scroll_vy=0;
+    double rotation=0;
 
     public Layer(){
         pos[0]=0;pos[1]=0;
@@ -37,6 +39,22 @@ public class Layer {
         return wrapAround;
     }
 
+    public void setRotation(double radians){
+        rotation=radians;
+        if(rotation!=0){
+            rotateArt(radians);
+        }
+    }
+    public double getRotation(){
+        return rotation;
+    }
+    private void rotateArt(double radians){
+        BufferedImage bi=new BufferedImage((int)(art.getWidth()),(int)(art.getHeight()),art.getType());
+        Graphics2D tempG=bi.createGraphics();
+        tempG.drawImage(art, new Rotate(radians), 0, 0);
+        rotatedArt= bi;
+    }
+
     public BufferedImage getFittedImage(int wid, int hei){
         if(art==null){return null;}
         if(fittedArt==null){
@@ -53,6 +71,12 @@ public class Layer {
             tempG.drawImage(art, new BIOP(wid_ratio,hei_ratio), 0, 0);
         }
         return fittedArt;
+    }
+    public BufferedImage getArt(){
+        if(rotation!=0){
+            return rotatedArt;
+        }
+        return art;
     }
 
     public void setImage(BufferedImage a){

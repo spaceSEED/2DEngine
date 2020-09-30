@@ -6,7 +6,7 @@ import java.awt.image.BufferedImageOp;
 import java.awt.image.ColorModel;
 import java.awt.image.IndexColorModel;
 
-public class Rotate implements BufferedImageOp {
+public class Rotate implements BufferedImageOp {//todo remove rotation artifacts
     double dif=0;
     double cx, cy;
     public Rotate(double dif){

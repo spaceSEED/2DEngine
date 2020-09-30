@@ -60,7 +60,12 @@ static private long actionCntr=0;//for use if action updates are too frequent/fa
             if(Input.checkPushFlag.contains(KeyEvent.VK_RIGHT)){//movement example
                 window.scroll(1,0);
                 levels[0].getSprites()[0].moveSpriteBy(2,0);
-                levels[0].getSprites()[0].rotateSprite(Math.PI);
+                levels[0].getSprites()[0].setRotation(Math.PI);
+            }
+            if(Input.checkPushFlag.contains(KeyEvent.VK_LEFT)){//movement example
+                window.scroll(-1,0);
+                levels[0].getSprites()[0].moveSpriteBy(-2,0);
+                levels[0].getSprites()[0].setRotation(0);
             }
             if(Input.checkPushFlag.contains(KeyEvent.VK_DOWN)){//movement example
                 window.scroll(0,1);
@@ -68,6 +73,7 @@ static private long actionCntr=0;//for use if action updates are too frequent/fa
             }
             if(Input.checkPushFlag.contains(KeyEvent.VK_SPACE)){
                 window.clearText();
+                levels[0].BackgroundLayers[0].setRotation(Math.PI);
             }
             if(MouseInput.mouseActionPos!=null){//mouse position use example
                 levels[0].getSprites()[0].moveSpriteToInScreen(MouseInput.mouseActionPos.x,MouseInput.mouseActionPos.y);
