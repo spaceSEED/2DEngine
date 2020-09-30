@@ -35,7 +35,8 @@ public class Main {
         levels[0].getFGLayers()[0].setPos(25,25);
         //levels[0].getBGLayers()[0].setScroll(2,1);
         levels[0].setSprite(0,new Sprite(100,100,190,190));//test
-        levels[0].setSpriteImage(0,assetPath+"guybrush_justwalking.png",null,true);//test
+        //levels[0].setSpriteImage(0,assetPath+"guybrush_justwalking.png",null,true);//test
+        levels[0].setSpriteImage(0,assetPath+"strawberry.jpg",null,false);//test
 
         /////////////test code/////////////////
 
@@ -59,6 +60,7 @@ static private long actionCntr=0;//for use if action updates are too frequent/fa
             if(Input.checkPushFlag.contains(KeyEvent.VK_RIGHT)){//movement example
                 window.scroll(1,0);
                 levels[0].getSprites()[0].moveSpriteBy(2,0);
+                levels[0].getSprites()[0].rotateSprite(Math.PI);
             }
             if(Input.checkPushFlag.contains(KeyEvent.VK_DOWN)){//movement example
                 window.scroll(0,1);

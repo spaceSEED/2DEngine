@@ -107,6 +107,14 @@ public class Sprite {//todo
         tempG.drawImage(im, new BIOP(wid_ratio,hei_ratio), 0, 0);
         return bi;
     }
+    public void rotateSprite(double radians){
+        //int diag=(int)Math.sqrt(Math.pow(spriteImage.getWidth(),2)+Math.pow(spriteImage.getHeight(),2));
+        //BufferedImage bi=new BufferedImage(diag,diag,BufferedImage.TYPE_INT_ARGB);
+        BufferedImage bi=new BufferedImage((int)(spriteImage.getWidth()),(int)(spriteImage.getHeight()),spriteImage.getType());
+        Graphics2D tempG=bi.createGraphics();
+        tempG.drawImage(spriteImage, new Rotate(radians), 0, 0);
+        spriteImage= bi;
+    }
 
     private static long called=0;
     public BufferedImage getSprite(){//return a rescaled image on the proper animation frame
